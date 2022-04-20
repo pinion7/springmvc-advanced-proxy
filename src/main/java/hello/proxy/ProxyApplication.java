@@ -1,11 +1,7 @@
 package hello.proxy;
 
-import hello.proxy.config.AppV1Config;
-import hello.proxy.config.AppV2Config;
-import hello.proxy.config.v1_proxy.ConcreteProxyConfig;
-import hello.proxy.config.v1_proxy.InterfaceProxyConfig;
-import hello.proxy.config.v2_dynamicproxy.DynamicProxyBasicConfig;
-import hello.proxy.config.v2_dynamicproxy.DynamicProxyFilterConfig;
+import hello.proxy.config.v3_proxyfactory.ProxyFactoryConfigV1;
+import hello.proxy.config.v3_proxyfactory.ProxyFactoryConfigV2;
 import hello.proxy.trace.logtrace.LogTrace;
 import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +26,8 @@ import org.springframework.context.annotation.Import;
 //@Import({AppV1Config.class, AppV2Config.class}) // V3는 그냥 바로 자동스캔 되도록, controller, service, repository에 애노테이션을 붙여둠(그리고 전부 app패키지 이하에 있어서 자동스캔됨!)
 //@Import({InterfaceProxyConfig.class, ConcreteProxyConfig.class}) // 프록시 적용을 위해 기존 임포트 주석처리하고 새로운 config 클래스 임포트!
 //@Import(DynamicProxyBasicConfig.class)
-@Import(DynamicProxyFilterConfig.class)
+//@Import(DynamicProxyFilterConfig.class)
+@Import({ProxyFactoryConfigV1.class, ProxyFactoryConfigV2.class})
 @SpringBootApplication(scanBasePackages = "hello.proxy.app")
 public class ProxyApplication {
 
