@@ -4,6 +4,8 @@ import hello.proxy.config.AppV1Config;
 import hello.proxy.config.AppV2Config;
 import hello.proxy.config.v1_proxy.ConcreteProxyConfig;
 import hello.proxy.config.v1_proxy.InterfaceProxyConfig;
+import hello.proxy.config.v2_dynamicproxy.DynamicProxyBasicConfig;
+import hello.proxy.config.v2_dynamicproxy.DynamicProxyFilterConfig;
 import hello.proxy.trace.logtrace.LogTrace;
 import hello.proxy.trace.logtrace.ThreadLocalLogTrace;
 import org.springframework.boot.SpringApplication;
@@ -26,7 +28,9 @@ import org.springframework.context.annotation.Import;
 // 다시말해 "hello.proxy.app" 이하만 컴포넌트 스캔! (역시 2번에서 말했듯 안그러면 config 패키지 내에 있는 모든(V1~V3) AppConfig설정들이 다 자동 스캔되므로!)
 // 즉, @Import를 사용해 V1, V2, V3 Config 파일을 각각을 필요할때마다 수동 등록하는 방식으로 실습해보려는 것! (즉 이러한 이유로 @Import도 사용하는 거임!: 본래 전체스캔할거면 안써도됨!)
 //@Import({AppV1Config.class, AppV2Config.class}) // V3는 그냥 바로 자동스캔 되도록, controller, service, repository에 애노테이션을 붙여둠(그리고 전부 app패키지 이하에 있어서 자동스캔됨!)
-@Import({InterfaceProxyConfig.class, ConcreteProxyConfig.class}) // 프록시 적용을 위해 기존 임포트 주석처리하고 새로운 config 클래스 임포트!
+//@Import({InterfaceProxyConfig.class, ConcreteProxyConfig.class}) // 프록시 적용을 위해 기존 임포트 주석처리하고 새로운 config 클래스 임포트!
+//@Import(DynamicProxyBasicConfig.class)
+@Import(DynamicProxyFilterConfig.class)
 @SpringBootApplication(scanBasePackages = "hello.proxy.app")
 public class ProxyApplication {
 
